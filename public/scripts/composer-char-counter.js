@@ -14,12 +14,14 @@ $(document).ready(function() {
       
     }
   })
-
-  $(".tweet").hover(function(){
-    $(this).css("box-shadow","5px 10px #888888")
+  $("#tweet").hover(function(){
+    $(".user__handle").show();
     }, function(){
-      $(this).css("box-shadow", "none")});
-   
+      // $(this).css("box-shadow", "none")
+      $(".user__handle").hide();
+    });
+ 
+      
   
 
 

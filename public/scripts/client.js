@@ -49,10 +49,10 @@ $(() =>{
       const $header = $('<header>').addClass('tweet__header')
       const $avatars = $('<img>').attr("src",tweet.user.avatars);
       const $userName = $('<h3>').addClass('user-name').text(tweet.user.name);
-      const $handle = $('<h>').addClass('user-handle').text(tweet.user.handle)
+      const $handle = $('<h>').addClass('user__handle').text(tweet.user.handle)
       
       const $body = $('<article>')
-      const $content = $('<h5>').text(tweet.content.text);
+      const $content = $('<h5>').addClass('tweet__content').text(tweet.content.text);
       const $footer = $('<footer>').addClass('tweet__footer')
       const readableDate = moment(tweet.created_at).fromNow();
       const date = $('<p>').addClass('date').text(readableDate);
@@ -71,6 +71,7 @@ $(() =>{
     }
 
   }
+  
   const $tweetForm = $('#new-tweet');
 
   $tweetForm.on('submit', function (event) {
@@ -86,12 +87,25 @@ $(() =>{
 
           $(this).children("#tweet-text").val(''); 
           
-
         }) 
    
   })
     
-  
+
+
+  const loadTweets = () => {
+
+    $.ajax({
+        url: "/tweets/",
+        method: 'GET',
+        dataType: 'json',
+      })
+      .then(function(data) {
+        renderTweets(data);
+      });
+  };
+
+  loadTweets();
 
 
 });
