@@ -17,20 +17,34 @@
 
     <!-- External JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://timeago.yarp.com/jquery.timeago.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" type="text/javascript"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
     
     <!-- App JS -->
-    <script type="text/javascript" src="/scripts/client.js"></script>
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
+    <script type="text/javascript" src="/scripts/client.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+
+
+
+
   </head>
   
   <body>
     <!-- Top nav bar (fixed) -->
     <nav>
       <span>tweeter</span>
+      <div class="rightnav">
+      <a href="#tweet-text">write a new tweet</a>
+    </div>
+      </nav>
     </nav>
     <header class="real">
       <div>
-        <img src="/images/profile-hex.png"> 
+        <img src="/images/xin.jpeg"> 
       </div>
       <br>
       <div>
@@ -41,9 +55,22 @@
     <main class="container">
       <section class="new-tweet">      
         <form id="new-tweet">
+          <span class="error" name="error-message"></span>
+          
           <textarea id="tweet-text" name="text" spellcheck="" placeholder="What are you humming about?"></textarea>
+      
           <div>
-            <button type="submit" id="tweet-button">Tweet</button>
+
+            <button type="submit" id="tweet-button" >Tweet
+            </button>
+            <!-- <div class="images-more">
+              <span class='file file--upload'>
+                <label for='input-file'><a><i class="fas fa-upload"></i></a></label>
+                <input id='input-file' type='file' /></span>
+              <span><a href=""><i class="fas fa-poll-h"></i></a></span>
+              <span><a href=""><i class="fa fa-user-circle"></i></span>
+              <span><a href=""><i class="fas fa-calendar-day"></i></a></span>
+            </div> -->
             <output name="counter" class="counter" for="tweet-text">140</output>
           </div>
         </form>

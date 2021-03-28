@@ -1,18 +1,15 @@
 $(document).ready(function() {
-  // console.log("^_^")
+  console.log("^_^")
   $("#tweet-text").keyup(function() {
-    // console.log(this.value);
+    console.log(this.value);
    let len = 140-this.value.length;
     // let len = text.length;
     // console.log(len);
     if (len >= 0 ) {
       $(".counter").css("color","blue").html(len);
-    } else  {
-    //  $('#tweet-button').error(function() {
-    //   alert( "Handler for .error() called." )})
+    } else {
       $(".counter").css("color","red").html(len);
-      
-    }
+    }   
   })
 
   $(".tweet").hover(function(){
@@ -20,7 +17,7 @@ $(document).ready(function() {
     }, function(){
       $(this).css("box-shadow", "none")});
    
-  
+    
 
 
 });

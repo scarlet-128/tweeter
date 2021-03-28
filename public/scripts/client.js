@@ -1,6 +1,6 @@
-
 $(() =>{
-  console.log("something")
+  // console.log("something")
+  jQuery("time.timeago").timeago();
   const fetchTweets = () =>{
     $.ajax({
       url: '/tweets/',
@@ -9,52 +9,44 @@ $(() =>{
       success : (tweets) => {
         renderTweets(tweets);
       },
-      error: (error) => {
-        throw error;
+      error: function (request, status, error) {
+        alert(request.responseText);
       }
     })
   }
-  const $tweetButton = $("tweet-button");
+  const $tweetButton = $("#tweet-button");
   $tweetButton.click(()=>{
     fetchTweets();
   })
   const renderTweets = (tweets) => {
-    console.log("tweets",tweets)
+    // console.log("tweets",tweets)
     const $tweets = $('#tweet');
     $tweets.empty();
     for(const id in tweets) {
-      console.log("id",id)
+      // console.log("id",id)
       const tweet = tweets[id];
-      console.log("tweetid",tweet)
-      // const newTweet = `<article class="tweet">
-      // <header class="tweet__header">
-      //   <img src="/images/profile-hex.png">
-      //   <p>${tweet.user.name}</p>
-      // </header>
-      // <article>
-      //   <h3> Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, expedita maiores dolorem adipisci totam cupiditate deleniti. A dolor veniam exercitationem eum velit, recusandae ab sint, reiciendis soluta sit eaque sunt!</h3>
-      // </article>
-      // <footer>
-      //   <p>youare hello>
-      //     <div>
-      //       SMT
-      //     </div>
-          
-      //   </footer>
-      // </article>`
-      // $tweets.append(newTweet);
+      // console.log("tweetid",tweet)
       const $tweet = $('<article>').addClass('tweet');
-      const $header = $('<div>').addClass('tweet__header')
+      const $header = $('<header>').addClass('tweet__header')
       const $avatars = $('<img>').attr("src",tweet.user.avatars);
-      const $userName = $('<h3>').text(tweet.user.name);
-      const $handle = $('<b>').addClass('user-name').text(tweet.user.handle);
+      const $userName = $('<h3>').addClass('user-name').text(tweet.user.name);
+      const $handle = $('<h>').addClass('user-handle').text(tweet.user.handle)
+      
       const $body = $('<article>')
       const $content = $('<h5>').text(tweet.content.text);
-      const $footer = $('<footer>');
-      $userName.append($handle);
+      const $footer = $('<footer>').addClass('tweet__footer')
+      const readableDate = moment(tweet.created_at).fromNow();
+      const date = $('<p>').addClass('date').text(readableDate);
+    
+      
+  // append social media buttons
+      const comments = $('<i>').addClass("fas fa-comments");
+      const retweet = $('<i>').addClass("fas fa-retweet");
+      const like = $('<i>').addClass("fas fa-heart")
+      const upload = $('<i>').addClass("fas fa-arrow-circle-up");
       $body.append($content);
-      $header.append($avatars,$userName);
-
+      $header.append($avatars,$userName,$handle);
+      $footer.append(date,comments,retweet,like,upload)
       $tweet.append($header,$body,$footer)
       $tweets.prepend($tweet)
     }
@@ -63,18 +55,29 @@ $(() =>{
   const $tweetForm = $('#new-tweet');
 
   $tweetForm.on('submit', function (event) {
-    event.preventDefault();
+   event.preventDefault();
+     const serializedData = $(this).serialize();
+     const tweet = $('textarea').val()
+     
+      $.post('/tweets/', serializedData)
+        .then((response) => {
+        
+          fetchTweets();
 
-    const serializedData = $(this).serialize();
+          $(this).children("#tweet-text").val(''); 
+          
 
+        }) 
+        // if(tweet.length === 0 || tweet.length > 140){
+          .catch((error) =>  {
+            alert( "please insert text befor submit" )
+          })
+        // };
+    // }  
+  })
     
-    $.post('/tweets/', serializedData)
-      .then((response) => {
-        console.log("tweet",'^^')
-        fetchTweets();
+  
 
-        $(this).children('input').val('');
-      });  
-  });
 
-})
+});
+
