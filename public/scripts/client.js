@@ -1,6 +1,6 @@
 $(() =>{
   // console.log("something")
-  jQuery("time.timeago").timeago();
+  
   const fetchTweets = () =>{
     $.ajax({
       url: '/tweets/',
@@ -9,14 +9,33 @@ $(() =>{
       success : (tweets) => {
         renderTweets(tweets);
       },
-      error: function (request, status, error) {
-        alert(request.responseText);
+      error: (error) => {
+       console.error(error)
       }
     })
   }
   const $tweetButton = $("#tweet-button");
   $tweetButton.click(()=>{
+    const len = $("#tweet-text").val().length
+    let validation;
+    if (len === 0 ) {
+      // alert( "please insert text befor submit" )
+      // const warning = $('<div>').text("Please insert text befor submit")
+      const warning = $('<i>').addClass('fas fa-exclamation-triangle').text('Whooops!!! Enter something first')
+      $('#warning').empty();
+      $('#warning').append(warning).fadeIn();
+      $('#warning').append(warning).fadeOut(5000);
+      return validation === false
+    } else if (len >140){
+      const warning = $('<i>').addClass('fas fa-exclamation-triangle').text('Whooops!!! Exceed word limit!')
+      $('#warning').empty();
+      $('#warning').append(warning).fadeIn();
+      $('#warning').append(warning).fadeOut(5000)
+      return validation === false
+     } 
+     if (validation === true) {
     fetchTweets();
+    }
   })
   const renderTweets = (tweets) => {
     // console.log("tweets",tweets)
@@ -55,9 +74,10 @@ $(() =>{
   const $tweetForm = $('#new-tweet');
 
   $tweetForm.on('submit', function (event) {
+    $(".counter").html('140');
    event.preventDefault();
      const serializedData = $(this).serialize();
-     const tweet = $('textarea').val()
+    
      
       $.post('/tweets/', serializedData)
         .then((response) => {
@@ -68,12 +88,7 @@ $(() =>{
           
 
         }) 
-        // if(tweet.length === 0 || tweet.length > 140){
-          .catch((error) =>  {
-            alert( "please insert text befor submit" )
-          })
-        // };
-    // }  
+   
   })
     
   

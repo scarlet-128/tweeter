@@ -34,3 +34,10 @@ body {
 .counter {
   float : right;
 }
+#warning {
+  font-family: 'New Tegomin', serif;
+}
+ #warning i {
+  border: red solid;
+  color: red;
+ }
