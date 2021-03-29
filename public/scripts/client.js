@@ -8,6 +8,7 @@ $(() =>{
       dataType : 'json',
       success : (tweets) => {
         renderTweets(tweets);
+        $(".user__handle").hide();
       },
       error: (error) => {
        console.error(error)
@@ -101,12 +102,13 @@ $(() =>{
         dataType: 'json',
       })
       .then(function(data) {
+        
         renderTweets(data);
       });
   };
 
   loadTweets();
-
+  
 
 });
 

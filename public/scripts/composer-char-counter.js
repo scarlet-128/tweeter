@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  // console.log("^_^")
+  $(".user__handle").hide();
   $("#tweet-text").keyup(function() {
     // console.log(this.value);
    let len = 140-this.value.length;
